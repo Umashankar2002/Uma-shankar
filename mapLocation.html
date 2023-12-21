@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Location Map</title>
+    <style>
+        /* Ensure the map container takes up the full screen */
+        #map {
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Current Location Map</h1>
+
+    <!-- Map container -->
+    <div id="map"></div>
+
+    <script>
+        // Function to initialize and display the map
+        function initMap(latitude, longitude) {
+            // Create a LatLng object with the retrieved coordinates
+            var myLatLng = {lat: latitude, lng: longitude};
+
+            // Create a map centered at the user's location
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: myLatLng,
+                zoom: 15 // You can adjust the zoom level as needed
+            });
+
+            // Add a marker at the user's location
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Your Location'
+            });
+        }
+
+        // Function to handle the Geolocation API response
+        function handleLocation(position) {
+            var latitude =  17.416192;
+            var longitude = 78.4564224;
+
+            // Initialize and display the map with the retrieved coordinates
+            initMap(latitude, longitude);
+        }
+        // Function to handle errors with Geolocation API
+        function handleError(error) {
+            console.error('Error getting location:', error.message);
+        }
+
+        // Check if the Geolocation API is supported by the browser
+        if (navigator.geolocation) {
+            // Retrieve the user's current location
+            navigator.geolocation.getCurrentPosition(handleLocation, handleError);
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    </script>
+
+    <!-- Include the Google Maps API script with your API key -->
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJyNhA1idXOqaR2sDYA3pdFXBKjC-KuFk&callback=initMap">
+    </script>
+
+</body>
+</html>
